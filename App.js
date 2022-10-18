@@ -8,11 +8,13 @@ const comments = [
     id: 1,
     name: 'John Doe',
     comment: 'This is a comment',
+    likes: false,
   },
   {
     id: 2,
     name: 'Jane Doe',
     comment: 'This is another comment',
+    likes: true,
   },
 ]
 
@@ -26,6 +28,7 @@ export default function App() {
     setCommentList([...commentList, { id: commentList.length + 1, name: name, comment: comment }]);
     setComment('');
   }
+
 
 
   return (
@@ -54,6 +57,14 @@ export default function App() {
               <View style={{borderWidth: 1, borderColor: 'gray', width: 300, padding: 10, marginVertical: 5}}>
                 <Text style={{fontWeight: '600', fontSize: 16}}>{item.name}</Text>
                 <Text>{item.comment}</Text>
+                
+                {/* Add Like */}
+                <TouchableOpacity onPress={() => {commentList[item.id - 1].likes = !commentList[item.id - 1].likes; setCommentList([...commentList])}} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                  {/* <Image source={{uri: 'https://assets.ccbp.in/frontend/react-js/comments-app/like-img.png'}} style={{height: 20, width: 20}} /> */}
+                  {item.likes ? <Image source={{uri: 'https://assets.ccbp.in/frontend/react-js/comments-app/like-img.png'}} style={{height: 20, width: 20}} /> : <Image source={{uri: 'https://assets.ccbp.in/frontend/react-js/comments-app/liked-img.png'}} style={{height: 20, width: 20}} />}
+                  <Text style={{marginLeft: 5}}>Like</Text>
+                </TouchableOpacity>
+               
               </View>
             )}
           />
