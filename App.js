@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Image, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
 
 import { useState } from 'react';
+import CommentItem from './components/CommentItem';
 
 const comments = [
   {
@@ -29,6 +30,11 @@ export default function App() {
     setComment('');
   }
 
+  const deleteItem = (id) => {
+    setCommentList(commentList.filter((item) => item.id !== id));
+    // console.log(id)
+  }
+
 
 
   return (
@@ -54,18 +60,7 @@ export default function App() {
             data={commentList}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
-              <View style={{borderWidth: 1, borderColor: 'gray', width: 300, padding: 10, marginVertical: 5}}>
-                <Text style={{fontWeight: '600', fontSize: 16}}>{item.name}</Text>
-                <Text>{item.comment}</Text>
-                
-                {/* Add Like */}
-                <TouchableOpacity onPress={() => {commentList[item.id - 1].likes = !commentList[item.id - 1].likes; setCommentList([...commentList])}} style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
-                  {/* <Image source={{uri: 'https://assets.ccbp.in/frontend/react-js/comments-app/like-img.png'}} style={{height: 20, width: 20}} /> */}
-                  {item.likes ? <Image source={{uri: 'https://assets.ccbp.in/frontend/react-js/comments-app/like-img.png'}} style={{height: 20, width: 20}} /> : <Image source={{uri: 'https://assets.ccbp.in/frontend/react-js/comments-app/liked-img.png'}} style={{height: 20, width: 20}} />}
-                  <Text style={{marginLeft: 5}}>Like</Text>
-                </TouchableOpacity>
-               
-              </View>
+              <CommentItem commentList={item} deleteItem={deleteItem} />
             )}
           />
             
